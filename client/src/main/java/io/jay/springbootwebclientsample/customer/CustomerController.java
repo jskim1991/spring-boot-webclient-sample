@@ -20,9 +20,4 @@ public class CustomerController {
     public List<Customer> getAllCustomers() {
         return customerService.getCustomers();
     }
-//
-//    @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-//    public Flux<Customer> getAllCustomersStream() {
-//        return customerService.getCustomersStream();
-//    }
 }

@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -22,12 +20,17 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public Flux<User> getUsers(@RequestParam List<Integer> ids) {
-        return userService.fetchUsers(ids);
+    public Flux<User> getUsers(@RequestParam int limit) {
+        return userService.fetchUsers(limit);
     }
 
     @GetMapping("/users/{id}/posts")
     public Mono<UserPosts> getPostsBySpecificUser(@PathVariable int id) {
-        return userService.fetchUserAndPosts(id);
+        return userService.fetchUserPosts(id);
+    }
+
+    @GetMapping("/users/posts")
+    public Flux<UserPosts> getPostsByUsers(@RequestParam int limit) {
+        return userService.fetchMultipleUserPosts(limit);
     }
 }
