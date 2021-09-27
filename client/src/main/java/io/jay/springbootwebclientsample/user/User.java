@@ -1,4 +1,4 @@
-package io.jay.springbootwebclientsample;
+package io.jay.springbootwebclientsample.user;
 
 import lombok.Data;
 

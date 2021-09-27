@@ -1,4 +1,4 @@
-package io.jay.springbootwebclientsample;
+package io.jay.springbootwebclientsample.user;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
