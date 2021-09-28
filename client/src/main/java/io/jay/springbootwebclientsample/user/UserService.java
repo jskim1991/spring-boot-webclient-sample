@@ -1,5 +1,6 @@
 package io.jay.springbootwebclientsample.user;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -13,9 +14,9 @@ public class UserService {
 
     private final WebClient webClient;
 
-    public UserService(WebClient.Builder webClientBuilder) {
+    public UserService(WebClient.Builder webClientBuilder, @Value("${server-url:http://localhost:8081}") String url) {
         this.webClient = webClientBuilder
-                .baseUrl("http://localhost:8081")
+                .baseUrl(url)
                 .build();
     }
 
