@@ -1,7 +1,5 @@
 package io.jay.springbootwebclientsample.user;
 
-import io.jay.springbootwebclientsample.config.UserEndpointConfiguration;
-import io.jay.springbootwebclientsample.user.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -25,7 +23,8 @@ public class UserEndpointTests {
     void setUp() {
         userService = mock(UserService.class);
         UserHandler userHandler = new UserHandler(userService);
-        RouterFunction<?> routes = new UserEndpointConfiguration().userApis(userHandler);
+        RouterFunction<?> routes = new UserEndpointConfiguration()
+                .userApis(userHandler);
         client = WebTestClient
                 .bindToRouterFunction(routes)
                 .build();
@@ -34,11 +33,13 @@ public class UserEndpointTests {
     @Test
     void test_getUsers_returnsOK_withUserList() {
         when(userService.fetchUsers(1))
-                .thenReturn(Flux.just(userSample(1)));
+                .thenReturn(Flux.just(userWithId(1)));
 
 
         client.get()
-                .uri(uriBuilder -> uriBuilder.path("/users").queryParam("limit", "1").build())
+                .uri(uriBuilder -> uriBuilder.path("/users")
+                        .queryParam("limit", "1")
+                        .build())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -49,21 +50,23 @@ public class UserEndpointTests {
     @Test
     void test_getUser_returnsOK_withUser() {
         when(userService.fetchUser(1))
-                .thenReturn(Mono.just(userSample(1)));
+                .thenReturn(Mono.just(userWithId(1)));
 
 
         client.get()
-                .uri(uriBuilder -> uriBuilder.path("/users/{id}").build(1))
+                .uri(uriBuilder -> uriBuilder.path("/users/{id}")
+                        .build(1))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$.id").isEqualTo(1);
+                .jsonPath("$.id").isEqualTo(1)
+        ;
     }
 
     @Test
     void test_getPostsByUser_returnsOk_withUserAndPostList() {
         when(userService.fetchUserPosts(1))
-                .thenReturn(Mono.just(new UserPosts(userSample(1), postSamples(1))));
+                .thenReturn(Mono.just(new UserPosts(userWithId(1), postsByUserId(1))));
 
 
         client.get()
@@ -78,16 +81,16 @@ public class UserEndpointTests {
                 .jsonPath("$.posts[0].userId").isEqualTo(1)
                 .jsonPath("$.posts[0].title").isNotEmpty()
                 .jsonPath("$.posts[0].body").isNotEmpty()
-                ;
+        ;
     }
 
-    private User userSample(int id) {
+    private User userWithId(int id) {
         User user = new User();
         user.setId(id);
         return user;
     }
 
-    private List<Post> postSamples(int userId) {
+    private List<Post> postsByUserId(int userId) {
         Post post = new Post();
         post.setId(1);
         post.setUserId(userId);

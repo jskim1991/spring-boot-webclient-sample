@@ -1,8 +1,5 @@
 package io.jay.springbootwebclientsample.customer;
 
-import io.jay.springbootwebclientsample.config.CustomerEndpointConfiguration;
-import io.jay.springbootwebclientsample.customer.Customer;
-import io.jay.springbootwebclientsample.customer.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -24,7 +21,8 @@ public class CustomerEndpointTests {
     @BeforeEach
     void setUp() {
         mockCustomerService = mock(CustomerService.class);
-        RouterFunction<?> routes = new CustomerEndpointConfiguration().customerApis(mockCustomerService);
+        RouterFunction<?> routes = new CustomerEndpointConfiguration()
+                .customerApis(mockCustomerService);
         client = WebTestClient.bindToRouterFunction(routes)
                 .build();
     }

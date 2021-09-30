@@ -41,6 +41,9 @@ public class UserHandler {
         int numberOfUsers = Integer.parseInt(limit.get());
         Flux<UserPosts> userPostsFlux = userService.fetchMultipleUserPosts(numberOfUsers);
         return ok().body(userPostsFlux, UserPosts.class);
+    }
 
+    public Mono<ServerResponse> dummyHandler(ServerRequest request) {
+        return Mono.error(new CustomUserException("Prohibited"));
     }
 }

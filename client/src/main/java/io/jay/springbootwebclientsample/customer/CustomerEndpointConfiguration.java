@@ -1,7 +1,5 @@
-package io.jay.springbootwebclientsample.config;
+package io.jay.springbootwebclientsample.customer;
 
-import io.jay.springbootwebclientsample.customer.Customer;
-import io.jay.springbootwebclientsample.customer.CustomerService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;

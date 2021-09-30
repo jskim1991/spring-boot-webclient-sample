@@ -57,16 +57,17 @@ public class UserServiceTests {
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .setBody(JsonFileStubReader.fileToJson("user.json"))
         );
+
+
         Mono<User> userMono = userService.fetchUser(1);
 
 
         StepVerifier.create(userMono)
-                .expectNextMatches(user -> {
+                .assertNext(user -> {
                     assertThat(user.getId(), equalTo(1));
                     assertThat(user.getUsername(), is(notNullValue()));
                     assertThat(user.getEmail(), is(notNullValue()));
                     assertThat(user.getName(), is(notNullValue()));
-                    return true;
                 })
                 .verifyComplete();
     }
