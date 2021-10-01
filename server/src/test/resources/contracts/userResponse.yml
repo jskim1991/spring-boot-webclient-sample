@@ -1,0 +1,20 @@
+description: User info
+name: userResponse_success
+request:
+  method: GET
+  urlPath: /users/1
+response:
+  status: 200
+  bodyFromFile: userResponse.json
+  matchers:
+    body:
+      - path: $.id
+        type: by_type
+      - path: $.name
+        type: by_type
+      - path: $.username
+        type: by_type
+      - path: $.email
+        type: by_type
+  headers:
+    Content-Type: "application/json"
