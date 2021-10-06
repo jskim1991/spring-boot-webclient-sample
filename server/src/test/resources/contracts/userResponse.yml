@@ -2,7 +2,7 @@ description: User info
 name: userResponse_success
 request:
   method: GET
-  urlPath: /users/1
+  urlPath: /users/999
 response:
   status: 200
   bodyFromFile: userResponse.json

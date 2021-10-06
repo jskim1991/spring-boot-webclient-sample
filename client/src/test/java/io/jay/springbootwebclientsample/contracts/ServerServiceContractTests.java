@@ -23,19 +23,17 @@ public class ServerServiceContractTests {
     @Autowired
     private UserService userService;
 
-
     @Test
     void test_fetchUser_contract() {
-        Mono<User> userMono = userService.fetchUser(1);
+        Mono<User> userMono = userService.fetchUser(999);
 
         StepVerifier.create(userMono)
                 .assertNext(user -> {
-                    assertThat(user.getId(), equalTo(1));
-                    assertThat(user.getName(), equalTo("name"));
-                    assertThat(user.getUsername(), equalTo("username"));
-                    assertThat(user.getEmail(), equalTo("username@email.com"));
+                    assertThat(user.getId(), equalTo(999));
+                    assertThat(user.getName(), equalTo("Jay"));
+                    assertThat(user.getUsername(), equalTo("jay"));
+                    assertThat(user.getEmail(), equalTo("jay@email.com"));
                 })
                 .verifyComplete();
     }
-
 }
