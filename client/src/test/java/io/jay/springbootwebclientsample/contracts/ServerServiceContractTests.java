@@ -2,7 +2,6 @@ package io.jay.springbootwebclientsample.contracts;
 
 import io.jay.springbootwebclientsample.user.User;
 import io.jay.springbootwebclientsample.user.UserService;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +11,7 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 
 @SpringBootTest
 @AutoConfigureStubRunner(

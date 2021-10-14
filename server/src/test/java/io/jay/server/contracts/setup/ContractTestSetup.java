@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
 import static org.mockito.Mockito.when;
@@ -18,10 +19,10 @@ import static org.mockito.Mockito.when;
 public abstract class ContractTestSetup {
 
     @Autowired
-    ApplicationContext context;
+    private ApplicationContext context;
 
     @MockBean
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @BeforeEach
     void setup() {
@@ -30,8 +31,10 @@ public abstract class ContractTestSetup {
         user.setName("random user name");
         user.setUsername("random username");
         user.setEmail("randomuser@email.com");
+
         when(userRepository.findById(999L))
                 .thenReturn(Mono.just(user));
+
 
         RestAssuredWebTestClient.applicationContextSetup(context);
     }
