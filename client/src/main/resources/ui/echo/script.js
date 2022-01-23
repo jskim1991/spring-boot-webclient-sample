@@ -6,7 +6,7 @@ function log(msg) {
     messagesDiv.appendChild(elem)
 }
 
-var websocket = null
+let websocket = null
 
 document.getElementById('close')
     .addEventListener('click', (e) => {

@@ -2,7 +2,7 @@ const messages = document.getElementById('messages')
 const button = document.getElementById('send')
 const message = document.getElementById('message')
 
-var websocket = null
+let websocket = null
 
 function send() {
     const value = message.value

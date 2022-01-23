@@ -32,28 +32,33 @@ public class UserService {
                 .flatMap(this::fetchUser);
     }
 
-    public Mono<List<Post>> fetchPosts(int id) {
+    public Flux<Post> fetchPosts(int id) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/posts")
                         .queryParam("userId", id)
                         .build())
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<>() {
-                });
+                .bodyToFlux(Post.class);
     }
 
     public Mono<UserPosts> fetchUserPosts(int id) {
+        return fetchUser(id)
+                .flatMap(user -> fetchPosts(user.getId()).collectList()
+                        .map(posts -> new UserPosts(user, posts)));
+
+        /* alternative way
         Mono<User> user = fetchUser(id);
-        Mono<List<Post>> posts = fetchPosts(id);
+        Mono<List<Post>> posts = fetchPosts(id).collectList();
         return Mono.zip(user, posts, UserPosts::new);
+        */
     }
 
     public Flux<UserPosts> fetchMultipleUserPosts(int numberOfUsers) {
         Flux<UserPosts> userPostsFlux = Flux.range(1, numberOfUsers).log()
                 .flatMap(id -> {
                     Mono<User> user = fetchUser(id);
-                    Mono<List<Post>> posts = fetchPosts(id);
+                    Mono<List<Post>> posts = fetchPosts(id).collectList();
                     return Mono.zip(user, posts)
                             .flatMap(t -> Mono.just(new UserPosts(t.getT1(), t.getT2())));
                 });

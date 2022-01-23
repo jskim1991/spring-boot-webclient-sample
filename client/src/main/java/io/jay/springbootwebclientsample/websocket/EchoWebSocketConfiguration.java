@@ -24,7 +24,7 @@ public class EchoWebSocketConfiguration {
     WebSocketHandler webSocketHandler() {
         return session -> {
             Flux<WebSocketMessage> out = IntervalMessageProducer
-                    .produce()
+                    .produce(10)
                     .doOnNext(System.out::println)
                     .map(session::textMessage)
                     .doFinally(signalType -> System.out.println("outbound connection: " + signalType));
